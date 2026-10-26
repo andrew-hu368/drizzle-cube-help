@@ -729,18 +729,25 @@ Trigger updates programmatically:
 import { useCubeQuery } from 'drizzle-cube/client';
 
 function RefreshableChart() {
-  const { data, isLoading, refetch } = useCubeQuery(query);
+  const { rawData, isLoading, refetch } = useCubeQuery(query);
 
   return (
     <div>
       <button onClick={() => refetch()}>
         Refresh Data
       </button>
+      <button onClick={() => refetch({ bustCache: true })}>
+        Refresh, skipping caches
+      </button>
       {/* Chart content */}
     </div>
   );
 }
 ```
+
+`refetch({ maxAgeSeconds: 60 })` accepts a cached server result up to 60
+seconds old, and `refetch({ bustCache: true })` skips both the client and server
+caches.
 
 ## Error Handling
 
