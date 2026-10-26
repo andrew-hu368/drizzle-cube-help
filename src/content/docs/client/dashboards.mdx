@@ -227,7 +227,7 @@ interface PortletConfig {
   // Behavior
   refresh?: {                 // Interval refresh (needs features.refresh.enabled)
     intervalSeconds: number   // Refetch every N seconds; overrides the dashboard default
-    pauseWhenHidden?: boolean // Skip refreshes while the browser tab is hidden
+    pauseWhenHidden?: boolean // Skip refreshes while the tab is hidden; unset inherits the dashboard's
   }
   cachingEnabled?: boolean    // Enable result caching
 }
@@ -461,8 +461,11 @@ How it behaves:
   adapters' `cors` option adds them for you.
 - **Only visible portlets fetch.** A portlet that is off-screen waits and
   refreshes when it scrolls back into view.
-- **Pausing.** Viewers can pause the whole dashboard from the toolbar or one
-  portlet from its header. Edit mode pauses every timer.
+- **Hidden tabs.** With `pauseWhenHidden`, refreshes stop while the browser tab
+  is hidden. A portlet without its own `pauseWhenHidden` uses the dashboard's;
+  setting it to `false` on the portlet overrides a dashboard `true`.
+- **Pausing.** Viewers can pause the whole dashboard from the toolbar (or the
+  floating toolbar) or one portlet from its header. Edit mode pauses every timer.
 - **Freshness.** Each portlet header shows how old its data is, and the age turns
   to a warning color when the data is older than two intervals.
 - **`manualRefresh` wins.** With `features.manualRefresh` on, nothing refreshes
